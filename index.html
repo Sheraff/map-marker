@@ -63,7 +63,8 @@ pin.bounce dot::after {
   to { opacity: 1; }  
 }
 
-arrow {
+marker::before {
+  content: '';
   height: var(--size);
   width: var(--size);
   background: white;
@@ -109,7 +110,6 @@ pin.bounce marker {
   <pin>
     <dot></dot>
     <marker>
-      <arrow></arrow>
       <content>hello out there</content>
     </marker>
   </pin>
