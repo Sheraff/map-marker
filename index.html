@@ -1,0 +1,131 @@
+<style>
+body {
+  margin: 0;
+}
+
+div {
+  height: 100vh;
+  width: 100vw;
+  background: black;
+  position: relative;
+}
+
+pin {
+  --size: 10px;
+  --duration: .75s;
+  position: absolute;
+  left: 50%;
+  top: calc(50% - var(--size) / 2);
+}
+
+dot {
+  position: absolute;
+  height: var(--size);
+  width: var(--size);
+  border-radius: 50%;
+  background: white;
+  transform: translateX(calc(-.5 * var(--size)));
+}
+
+dot::before, dot::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: calc(2 * var(--size));
+  width: calc(2 * var(--size));
+  background: #FFFFFF55;
+  transform: translate(-25%, -25%);
+  border-radius: 50%;
+}
+
+dot::after {
+  opacity: 0;
+}
+
+pin.bounce dot::before {
+  animation: 
+    var(--duration) ease-out forwards scale,
+    var(--duration) ease-out reverse forwards fade;
+}
+
+pin.bounce dot::after {
+  animation: var(--duration) ease-out forwards fade;
+}
+
+@keyframes scale { 
+  from { transform: translate(-25%, -25%); } 
+  to { transform: translate(-25%, -25%) scale(2); }  
+}
+
+@keyframes fade { 
+  from { opacity: 0; } 
+  to { opacity: 1; }  
+}
+
+arrow {
+  height: var(--size);
+  width: var(--size);
+  background: white;
+  position: absolute;
+  transform: rotate(-135deg);
+  transform-origin: top left;
+}
+
+content {
+  background: white;
+  position: absolute;
+  bottom: 0;
+  transform: translate(-50%, -7.071067812px);
+  /*7.071067812 = sqrt(10^2 + 10^2) / 2*/
+  padding: 10px;
+  white-space: nowrap;
+}
+
+marker {
+  display: block;
+  position: relative;
+  transform: translateY(-10px);
+}
+
+pin.bounce marker {
+  animation: var(--duration) ease forwards jump;
+}
+
+@keyframes jump { 
+  from { transform: translateY(-10px); } 
+  20% { transform: translateY(-15px); }  
+  /*adjust delta Y w/ duration*/
+  to { transform: translateY(-10px); }  
+}
+</style>
+
+<body>
+<div>
+  <button type="button">
+    bounce
+  </button>
+  <pin>
+    <dot></dot>
+    <marker>
+      <arrow></arrow>
+      <content>hello out there</content>
+    </marker>
+  </pin>
+  
+</div>
+</body>
+
+<script>
+const button = document.querySelector('button')
+const pin = document.querySelector('pin')
+const marker = document.querySelector('marker')
+
+button.addEventListener('click', () => {
+  pin.classList.add('bounce')
+})
+
+marker.addEventListener('animationend', () => {
+  pin.classList.remove('bounce')
+})
+</script>
