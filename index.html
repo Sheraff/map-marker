@@ -12,10 +12,11 @@ div {
 
 pin {
   --size: 10px;
-  --duration: .75s;
+  --duration: .7s;
   position: absolute;
   left: 50%;
   top: calc(50% - var(--size) / 2);
+  cursor: pointer;
 }
 
 dot {
@@ -104,29 +105,23 @@ pin.bounce marker {
 
 <body>
 <div>
-  <button type="button">
-    bounce
-  </button>
   <pin>
     <dot></dot>
     <marker>
-      <content>hello out there</content>
+      <content>click me bouncy</content>
     </marker>
   </pin>
-  
 </div>
 </body>
 
 <script>
-const button = document.querySelector('button')
 const pin = document.querySelector('pin')
-const marker = document.querySelector('marker')
 
-button.addEventListener('click', () => {
+pin.addEventListener('click', () => {
   pin.classList.add('bounce')
 })
 
-marker.addEventListener('animationend', () => {
+pin.addEventListener('animationend', () => {
   pin.classList.remove('bounce')
 })
 </script>
